@@ -37,7 +37,8 @@ app.use(
 app.use(express.json());
 
 // CORS
-app.use(cors());
+app.use(cors({ origin: '*' }));
+
 
 // use express router
 app.use("/", require("./routes"));
