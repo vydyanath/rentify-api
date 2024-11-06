@@ -36,9 +36,12 @@ app.use(
 // middleware to handle json
 app.use(express.json());
 
-// CORS
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: 'https://rentify-client-f8wg.onrender.com'
+}));
 
+// Handle preflight requests for all routes
+app.options('*', cors());
 
 // use express router
 app.use("/", require("./routes"));
