@@ -36,12 +36,22 @@ app.use(
 // middleware to handle json
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'http://localhost:3000', // Your Vite development server
+  'https://rentify-client-f8wg.onrender.com' // Your Render frontend
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);  // Allow the origin
+    } else {
+      callback(new Error('Not allowed by CORS'));  // Reject the origin
+    }
+  },
+  credentials: true,  // Allow credentials (cookies, etc.)
+}));
+
 
 // use express router
 app.use("/", require("./routes"));
